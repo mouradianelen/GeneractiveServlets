@@ -47,6 +47,16 @@ public class ItemRepository {
         return null;
     }
 
+    public Item findItemByPrice(int price) {
+
+        for (Item item : items) {
+            if (item.getBasePrice() == price) {
+                return item;
+            }
+        }
+        return null;
+    }
+
     public void replace(int id, Item item) {
         items.set(id, item);
     }
