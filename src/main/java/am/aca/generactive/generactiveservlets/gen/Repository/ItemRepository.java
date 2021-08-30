@@ -47,50 +47,51 @@ public class ItemRepository {
         return null;
     }
 
-    public Item findItemByPrice(int price) {
-
+    public List<Item> findItemByPrice(int priceFrom, int priceTo) {
+        List<Item> list = new ArrayList<>();
         for (Item item : items) {
-            if (item.getBasePrice() == price) {
-                return item;
+            if (item.getBasePrice() < priceTo && item.getBasePrice() > priceFrom) {
+                System.out.println(item.getId() + item.getName());
+                list.add(item);
             }
         }
-        return null;
+        return list;
     }
 
-    public void replace(int id, Item item) {
-        items.set(id, item);
-    }
-
-    public List<Item> getList() {
-        return this.items;
-    }
-
-    public Item existsById(int id) {
-        for (Item item : items) {
-            if (item.getId() == id)
-                if (item != null)
-                    return item;
+        public void replace ( int id, Item item){
+            items.set(id, item);
         }
-        return null;
-    }
 
-    public List<Group> getGroups() {
-        List<Group> parents = new ArrayList<>();
+        public List<Item> getList () {
+            return this.items;
+        }
 
-        for (Item item : items) {
-            if (item.getGroup() == null) {
-                parents.add(item.getGroup());
+        public Item existsById ( int id){
+            for (Item item : items) {
+                if (item.getId() == id)
+                    if (item != null)
+                        return item;
             }
+            return null;
         }
 
-        return parents;
-    }
+        public List<Group> getGroups () {
+            List<Group> parents = new ArrayList<>();
+
+            for (Item item : items) {
+                if (item.getGroup() == null) {
+                    parents.add(item.getGroup());
+                }
+            }
+
+            return parents;
+        }
 
     private ItemRepository() {
 
-    }
+        }
 
-    public int getSize() {
-        return this.items.size();
+        public int getSize () {
+            return this.items.size();
+        }
     }
-}

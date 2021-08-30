@@ -69,10 +69,8 @@ public class ItemSearchServlet extends HttpServlet {
 
         int priceFrom = Integer.parseInt(req.getParameter(START_PARAM));
         int priceTo = Integer.parseInt(req.getParameter(END_PARAM));
-        for (int i = priceFrom + 1; i < priceFrom; i++) {
-            if (items.findItemByPrice(i) != null)
-                list.add(items.findItemByPrice(i));
-        }
+
+        list = items.findItemByPrice(priceFrom, priceTo);
         String response = objectMapper.writeValueAsString(list);
         PrintWriter writer = resp.getWriter();
         writer.write(response);
