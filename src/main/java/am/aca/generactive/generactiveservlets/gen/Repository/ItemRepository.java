@@ -58,40 +58,40 @@ public class ItemRepository {
         return list;
     }
 
-        public void replace ( int id, Item item){
-            items.set(id, item);
-        }
+    public void replace(int id, Item item) {
+        items.set(id, item);
+    }
 
-        public List<Item> getList () {
-            return this.items;
-        }
+    public List<Item> getList() {
+        return this.items;
+    }
 
-        public Item existsById ( int id){
-            for (Item item : items) {
-                if (item.getId() == id)
-                    if (item != null)
-                        return item;
+    public Item existsById(int id) {
+        for (Item item : items) {
+            if (item.getId() == id)
+                if (item != null)
+                    return item;
+        }
+        return null;
+    }
+
+    public List<Group> getGroups() {
+        List<Group> parents = new ArrayList<>();
+
+        for (Item item : items) {
+            if (item.getGroup() == null) {
+                parents.add(item.getGroup());
             }
-            return null;
         }
 
-        public List<Group> getGroups () {
-            List<Group> parents = new ArrayList<>();
-
-            for (Item item : items) {
-                if (item.getGroup() == null) {
-                    parents.add(item.getGroup());
-                }
-            }
-
-            return parents;
-        }
+        return parents;
+    }
 
     private ItemRepository() {
 
-        }
-
-        public int getSize () {
-            return this.items.size();
-        }
     }
+
+    public int getSize() {
+        return this.items.size();
+    }
+}

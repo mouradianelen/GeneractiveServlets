@@ -6,7 +6,6 @@ import am.aca.generactive.generactiveservlets.gen.model.Item;
 import am.aca.generactive.generactiveservlets.gen.model.StockItem;
 import am.aca.generactive.generactiveservlets.gen.util.IdGenerator;
 import am.aca.generactive.generactiveservlets.gen.util.Type;
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.annotation.WebServlet;
@@ -16,7 +15,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
-import java.util.ArrayList;
 import java.util.List;
 import java.util.stream.Collectors;
 
@@ -65,7 +63,7 @@ public class ItemSearchServlet extends HttpServlet {
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         ObjectMapper objectMapper = new ObjectMapper();
-        List<Item> list = new ArrayList<>();
+        List<Item> list;
 
         int priceFrom = Integer.parseInt(req.getParameter(START_PARAM));
         int priceTo = Integer.parseInt(req.getParameter(END_PARAM));
