@@ -11,7 +11,7 @@ repositories {
 }
 
 ext {
-    junitVersion = '5.7.1'
+    junitVersion = '5.7.2'
 }
 
 sourceCompatibility = '1.8'
@@ -24,6 +24,7 @@ tasks.withType(JavaCompile) {
 dependencies {
     compileOnly('javax.servlet:javax.servlet-api:4.0.1')
     implementation group: 'com.fasterxml.jackson.core', name: 'jackson-databind', version: '2.12.4'
+    implementation group: 'org.postgresql', name: 'postgresql', version: '42.1.4'
 
     testImplementation("org.junit.jupiter:junit-jupiter-api:${junitVersion}")
     testRuntimeOnly("org.junit.jupiter:junit-jupiter-engine:${junitVersion}")

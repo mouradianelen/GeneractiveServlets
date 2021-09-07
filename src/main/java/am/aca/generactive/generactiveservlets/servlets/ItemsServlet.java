@@ -1,12 +1,14 @@
 package am.aca.generactive.generactiveservlets.servlets;
 
 import am.aca.generactive.generactiveservlets.gen.Repository.ItemRepository;
+import am.aca.generactive.generactiveservlets.gen.jdbc_util.JDBCutil;
 import am.aca.generactive.generactiveservlets.gen.model.GenerativeItem;
 import am.aca.generactive.generactiveservlets.gen.model.Item;
 import am.aca.generactive.generactiveservlets.gen.model.StockItem;
 import am.aca.generactive.generactiveservlets.gen.util.IdGenerator;
 import am.aca.generactive.generactiveservlets.gen.util.Type;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jdk.nashorn.internal.scripts.JD;
 
 import javax.servlet.ServletException;
 import javax.servlet.annotation.WebServlet;
@@ -16,13 +18,50 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.BufferedReader;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.sql.SQLException;
 import java.util.stream.Collectors;
 
 @WebServlet(name = "ItemsServlet", value = "/item/*")
 public class ItemsServlet extends HttpServlet {
     public static final String PARAM_TYPE = "type";
     public final ItemRepository items = ItemRepository.getInstance();
+    private JDBCutil util;
 
+    //    @Override
+//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+//        String typeParam = req.getParameter(PARAM_TYPE);
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        resp.setContentType("application/json");
+//        if (typeParam == null || typeParam.isEmpty()) {
+//            resp.setStatus(400);
+//            resp.getWriter().write("Missing param " + PARAM_TYPE);
+//            return;
+//        }
+//        ItemType itemType = ItemType.valueOf(typeParam);
+//        BufferedReader bufferedReader = req.getReader();
+//        String payload = bufferedReader.lines().collect(Collectors.joining());
+//        Item item;
+//
+//        switch (itemType) {
+//            case GENERATIVE:
+//                item = objectMapper.readValue(payload, GenerativeItem.class);
+//                break;
+//            case STOCK:
+//                item = objectMapper.readValue(payload, StockItem.class);
+//                break;
+//            default:
+//
+//                return;
+//
+//        }
+//        item.setId(IdGenerator.getNext(Type.ITEM));
+//        items.addItem(item);
+//        resp.getWriter().write(objectMapper.writeValueAsString(item));
+//
+//    }
+    public void init() {
+        util = new JDBCutil();
+    }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String typeParam = req.getParameter(PARAM_TYPE);
@@ -50,10 +89,13 @@ public class ItemsServlet extends HttpServlet {
                 return;
 
         }
-        item.setId(IdGenerator.getNext(Type.ITEM));
+        try {
+            util.insertUser(item);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
         items.addItem(item);
         resp.getWriter().write(objectMapper.writeValueAsString(item));
-
     }
 
     @Override
