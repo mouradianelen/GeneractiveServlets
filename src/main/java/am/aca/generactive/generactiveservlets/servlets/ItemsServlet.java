@@ -27,41 +27,6 @@ public class ItemsServlet extends HttpServlet {
     public final ItemRepository items = ItemRepository.getInstance();
     private JDBCutil util;
 
-    //    @Override
-//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
-//        String typeParam = req.getParameter(PARAM_TYPE);
-//        ObjectMapper objectMapper = new ObjectMapper();
-//        resp.setContentType("application/json");
-//        if (typeParam == null || typeParam.isEmpty()) {
-//            resp.setStatus(400);
-//            resp.getWriter().write("Missing param " + PARAM_TYPE);
-//            return;
-//        }
-//        ItemType itemType = ItemType.valueOf(typeParam);
-//        BufferedReader bufferedReader = req.getReader();
-//        String payload = bufferedReader.lines().collect(Collectors.joining());
-//        Item item;
-//
-//        switch (itemType) {
-//            case GENERATIVE:
-//                item = objectMapper.readValue(payload, GenerativeItem.class);
-//                break;
-//            case STOCK:
-//                item = objectMapper.readValue(payload, StockItem.class);
-//                break;
-//            default:
-//
-//                return;
-//
-//        }
-//        item.setId(IdGenerator.getNext(Type.ITEM));
-//        items.addItem(item);
-//        resp.getWriter().write(objectMapper.writeValueAsString(item));
-//
-//    }
-    public void init() {
-        util = new JDBCutil();
-    }
     @Override
     protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
         String typeParam = req.getParameter(PARAM_TYPE);
@@ -89,23 +54,70 @@ public class ItemsServlet extends HttpServlet {
                 return;
 
         }
-        try {
-            util.insertUser(item);
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
+        item.setId(IdGenerator.getNext(Type.ITEM));
         items.addItem(item);
         resp.getWriter().write(objectMapper.writeValueAsString(item));
+
     }
+//    public void init() {
+//        util = new JDBCutil();
+//    }
+//    @Override
+//    protected void doPost(HttpServletRequest req, HttpServletResponse resp) throws IOException {
+//        String typeParam = req.getParameter(PARAM_TYPE);
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        resp.setContentType("application/json");
+//        if (typeParam == null || typeParam.isEmpty()) {
+//            resp.setStatus(400);
+//            resp.getWriter().write("Missing param " + PARAM_TYPE);
+//            return;
+//        }
+//        ItemType itemType = ItemType.valueOf(typeParam);
+//        BufferedReader bufferedReader = req.getReader();
+//        String payload = bufferedReader.lines().collect(Collectors.joining());
+//        Item item;
+//
+//        switch (itemType) {
+//            case GENERATIVE:
+//                item = objectMapper.readValue(payload, GenerativeItem.class);
+//                break;
+//            case STOCK:
+//                item = objectMapper.readValue(payload, StockItem.class);
+//                break;
+//            default:
+//
+//                return;
+//
+//        }
+//        try {
+//            util.insertUser(item);
+//        } catch (SQLException e) {
+//            e.printStackTrace();
+//        }
+//        items.addItem(item);
+//        resp.getWriter().write(objectMapper.writeValueAsString(item));
+//    }
 
     @Override
     protected void doGet(HttpServletRequest req, HttpServletResponse resp) throws ServletException, IOException, IOException {
         System.out.println(req.getPathInfo());
         ObjectMapper objectMapper = new ObjectMapper();
-        String response = objectMapper.writeValueAsString(items.getList());
+        String response = null;
+        try {
+            response = objectMapper.writeValueAsString(items.findAll());
+        } catch (SQLException | ClassNotFoundException e) {
+            e.printStackTrace();
+        }
         System.out.println(items.getSize());
         PrintWriter writer = resp.getWriter();
-        writer.write(response);
+        try {
+            System.out.println(items.findAll().size());
+        } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        }
+
     }
 
     @Override

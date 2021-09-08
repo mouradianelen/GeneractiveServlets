@@ -4,6 +4,7 @@ package am.aca.generactive.generactiveservlets.gen.Repository;
 import am.aca.generactive.generactiveservlets.gen.model.Group;
 import am.aca.generactive.generactiveservlets.gen.model.Item;
 
+import java.sql.*;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -11,6 +12,9 @@ public class ItemRepository {
     private static ItemRepository sInstance;
 
     private final List<Item> items = new ArrayList<>();
+    private String url = "jdbc:postgresql://localhost:5432/postgres";
+    private String user = "postgres";
+    private String password = "12345";
 
     public static ItemRepository getInstance() {
         if (sInstance == null) {
@@ -93,5 +97,28 @@ public class ItemRepository {
 
     public int getSize() {
         return this.items.size();
+    }
+
+    public List<Item> findAll() throws SQLException, ClassNotFoundException {
+        Class.forName("org.postgresql.Driver");
+        Connection connection =
+                DriverManager.getConnection(url, user, password);
+        Statement statement = connection.createStatement();
+        
+
+        String sql = "select * from item";
+
+        ResultSet result = statement.executeQuery(sql);
+        List<Item> list=new ArrayList<>();
+        while(result.next()) {
+
+            String name = result.getString("name");
+            int   age  = result.getInt  ("baseprice");
+            list.add((Item)result);
+
+        }
+
+        return list;
+        
     }
 }
