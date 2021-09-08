@@ -3,6 +3,7 @@ package am.aca.generactive.generactiveservlets.gen.Repository;
 
 import am.aca.generactive.generactiveservlets.gen.model.Group;
 import am.aca.generactive.generactiveservlets.gen.model.Item;
+import am.aca.generactive.generactiveservlets.gen.model.StockItem;
 
 import java.sql.*;
 import java.util.ArrayList;
@@ -113,8 +114,10 @@ public class ItemRepository {
         while(result.next()) {
 
             String name = result.getString("name");
-            int   age  = result.getInt  ("baseprice");
-            list.add((Item)result);
+            int   baseprice  = result.getInt  ("baseprice");
+            int id=result.getInt("id");
+            StockItem item=new StockItem(id, baseprice,name);
+            list.add(item);
 
         }
 

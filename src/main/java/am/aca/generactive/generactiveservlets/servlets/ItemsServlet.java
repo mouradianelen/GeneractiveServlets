@@ -117,6 +117,7 @@ public class ItemsServlet extends HttpServlet {
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         }
+        writer.write(response);
 
     }
 
