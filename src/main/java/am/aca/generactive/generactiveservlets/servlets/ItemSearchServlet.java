@@ -6,6 +6,7 @@ import am.aca.generactive.generactiveservlets.gen.model.Item;
 import am.aca.generactive.generactiveservlets.gen.model.StockItem;
 import am.aca.generactive.generactiveservlets.gen.util.IdGenerator;
 import am.aca.generactive.generactiveservlets.gen.util.Type;
+import am.aca.generactive.generactiveservlets.servlets.enums.ItemType;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import javax.servlet.annotation.WebServlet;
@@ -37,7 +38,7 @@ public class ItemSearchServlet extends HttpServlet {
             resp.getWriter().write("Missing param " + PARAM_TYPE);
             return;
         }
-        ItemsServlet.ItemType itemType = ItemsServlet.ItemType.valueOf(typeParam);
+        ItemType itemType = ItemType.valueOf(typeParam);
         BufferedReader bufferedReader = req.getReader();
         String payload = bufferedReader.lines().collect(Collectors.joining());
         Item item;

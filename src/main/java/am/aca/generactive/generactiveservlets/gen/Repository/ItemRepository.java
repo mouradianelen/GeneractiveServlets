@@ -105,23 +105,23 @@ public class ItemRepository {
         Connection connection =
                 DriverManager.getConnection(url, user, password);
         Statement statement = connection.createStatement();
-        
+
 
         String sql = "select * from item";
 
         ResultSet result = statement.executeQuery(sql);
-        List<Item> list=new ArrayList<>();
-        while(result.next()) {
+        List<Item> list = new ArrayList<>();
+        while (result.next()) {
 
             String name = result.getString("name");
-            int   baseprice  = result.getInt  ("baseprice");
-            int id=result.getInt("id");
-            StockItem item=new StockItem(id, baseprice,name);
+            int baseprice = result.getInt("baseprice");
+            int id = result.getInt("id");
+            StockItem item = new StockItem(id, baseprice, name);
             list.add(item);
 
         }
 
         return list;
-        
+
     }
 }

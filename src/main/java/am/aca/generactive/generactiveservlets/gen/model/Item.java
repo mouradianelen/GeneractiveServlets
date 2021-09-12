@@ -1,14 +1,22 @@
 package am.aca.generactive.generactiveservlets.gen.model;
 
-public abstract class Item {
+import javax.persistence.*;
 
+@Entity
+@Table(name = "item")
+public abstract class Item {
+    @Id
+    @GeneratedValue
     private int ID;
+    @Column(name = "baseprice")
     private int basePrice;
+    @Column(name = "name")
     private String name;
     private String imageUrl;
+    @Transient
     private Group group;
 
-    public Item(){
+    public Item() {
 
     }
 
