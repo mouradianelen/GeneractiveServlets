@@ -25,7 +25,7 @@ import java.util.stream.Collectors;
 
 import static am.aca.generactive.generactiveservlets.servlets.HttpConstants.CONTENT_TYPE_JSON;
 
-@WebServlet(name = "ItemsServlet", urlPatterns = "/item/*")
+@WebServlet(name = "ItemsServlet", value = "/item/*")
 public class ItemsServlet extends HttpServlet {
 
     public static final String PARAM_TYPE = "type";
