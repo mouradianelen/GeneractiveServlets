@@ -30,7 +30,7 @@ public class GroupRepository {
 
     public Group findGroupById(int groupId) {
         for (Group group: groups) {
-            if (group.getID() == groupId) {
+            if (group.getId() == groupId) {
                 return group;
             }
         }
