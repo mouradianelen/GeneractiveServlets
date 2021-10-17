@@ -115,7 +115,7 @@ public class ItemRepository {
 
             String name = result.getString("name");
             int baseprice = result.getInt("baseprice");
-            int id = result.getInt("id");
+            Long id = result.getLong("id");
             StockItem item = new StockItem(id, baseprice, name);
             list.add(item);
 

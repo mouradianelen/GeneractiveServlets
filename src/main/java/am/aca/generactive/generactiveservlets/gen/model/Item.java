@@ -39,17 +39,17 @@ public  class Item {
     public Item() {
     }
 
-    public Item(long id, int basePrice, String name) {
+    public Item(Long id, int basePrice, String name) {
         this.id = id;
         this.basePrice = basePrice;
         this.name = name;
     }
 
-    public long getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(long id) {
+    public void setId(Long id) {
         this.id = id;
     }
 

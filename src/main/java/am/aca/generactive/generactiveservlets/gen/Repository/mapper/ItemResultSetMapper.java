@@ -20,6 +20,6 @@ public class ItemResultSetMapper {
         long id = resultSet.getLong(alias + COLUMN_ID);
         String name = resultSet.getString(alias + COLUMN_NAME);
         int basePrice = resultSet.getInt(alias + COLUMN_BASE_PRICE);
-        return new StockItem((int) id, basePrice, name);
+        return new StockItem((Long) id, basePrice, name);
     }
 }

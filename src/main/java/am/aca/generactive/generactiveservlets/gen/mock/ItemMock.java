@@ -24,10 +24,10 @@ public class ItemMock {
     public static Item getItem(Class<? extends Item> clazz) {
         Item item;
         if (clazz == GenerativeItem.class) {
-            item = new GenerativeItem(IdGenerator.getNext(Type.GROUP),
+            item = new GenerativeItem((long) IdGenerator.getNext(Type.GROUP),
                     generateRandomPrice(), NAME_GEN.get());
         } else {
-            item =  new StockItem(IdGenerator.getNext(Type.GROUP),
+            item =  new StockItem((long) IdGenerator.getNext(Type.GROUP),
                     generateRandomPrice(), NAME_GEN.get());
         }
 

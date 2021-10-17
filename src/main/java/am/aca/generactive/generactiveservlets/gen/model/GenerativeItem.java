@@ -6,7 +6,7 @@ public class GenerativeItem extends Item {
         super();
     }
 
-    public GenerativeItem(int id, int basePrice, String name) {
+    public GenerativeItem(Long id, int basePrice, String name) {
         super(id, basePrice, name);
     }
 

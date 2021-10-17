@@ -7,7 +7,7 @@ public class StockItem extends Item {
 
     }
 
-    public StockItem(int id, int basePrice, String name) {
+    public StockItem(Long id, int basePrice, String name) {
         super(id, basePrice, name);
     }
 

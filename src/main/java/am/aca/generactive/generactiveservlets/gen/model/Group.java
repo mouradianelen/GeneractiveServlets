@@ -1,5 +1,6 @@
 package am.aca.generactive.generactiveservlets.gen.model;
 
+import com.fasterxml.jackson.annotation.JsonBackReference;
 import com.fasterxml.jackson.annotation.JsonIgnore;
 
 import javax.persistence.*;
@@ -21,7 +22,9 @@ public class Group {
     @JsonIgnore
     private List<Item> items = new ArrayList<>();
 
-    @Transient
+    @ManyToOne
+    @JoinColumn(name = "group_id")
+    @JsonBackReference
     private Group parentGroup;
 
     @Transient
